@@ -44,30 +44,19 @@ class Solution2(object):
             if i % 1 == 0:
                 L = int(i)
                 R = int(i)
-                while L >= 0 and R < len(s):
-                    if s[L] == s[R]:
-                        temp_pal = s[L:R + 1]
-                        temp_pal_len = len(temp_pal)
-                        if pal_len <= temp_pal_len:
-                            pal_len = temp_pal_len
-                            long_pal = temp_pal
-                    else:
-                        break
-                    L -= 1
-                    R += 1
             else:
                 L = int(i)
                 R = int(i + 1)
-                while L >= 0 and R < len(s):
-                    if s[L] == s[R]:
-                        temp_pal = s[L:R + 1]
-                        temp_pal_len = len(temp_pal)
-                        if pal_len <= temp_pal_len:
-                            pal_len = temp_pal_len
-                            long_pal = temp_pal
-                    else:
-                        break
-                    L -= 1
-                    R += 1
+            while L >= 0 and R < len(s):
+                if s[L] == s[R]:
+                    temp_pal = s[L:R + 1]
+                    temp_pal_len = len(temp_pal)
+                    if pal_len <= temp_pal_len:
+                        pal_len = temp_pal_len
+                        long_pal = temp_pal
+                else:
+                    break
+                L -= 1
+                R += 1
         return long_pal
 
