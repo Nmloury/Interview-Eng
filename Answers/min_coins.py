@@ -16,3 +16,14 @@ def min_coins(coins, coin_sum):
     for i in range(1, coin_sum + 1):
         check_sum(cache, coins, i)
     return cache[coin_sum]
+
+#######
+# Tests
+#######
+
+
+min_coins([1, 3, 5], 3)
+min_coins([1, 3, 5], 5)
+min_coins([1, 3, 5], 11)
+min_coins([1, 3, 5], 12)
+min_coins([2, 3, 5], 1)
