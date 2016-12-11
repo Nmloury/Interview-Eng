@@ -1,55 +1,55 @@
 /* First Query */
 
--- SELECT FirstName, LastName
--- FROM customer
--- LIMIT 10;
+SELECT FirstName, LastName
+FROM customer
+LIMIT 10;
 
 -- What are the genres in the database?
 
--- SELECT *
--- FROM genre
--- LIMIT 1000;
+SELECT *
+FROM genre
+LIMIT 1000;
 
 -- What are the customer names that are from California?
 
--- SELECT FirstName, LastName, State
--- FROM customer
--- WHERE State = 'CA';
+SELECT FirstName, LastName, State
+FROM customer
+WHERE State = 'CA';
 
 -- How many songs are longer than 10 minutes
--- SELECT COUNT(*)
--- FROM TRACK
--- WHERE Milliseconds > 600000;
+SELECT COUNT(*)
+FROM TRACK
+WHERE Milliseconds > 600000;
 -- 260
 
 -- How many invoices between
--- SELECT COUNT(*)
--- FROM Invoice
--- WHERE InvoiceDate BETWEEN '2010-01-01'
---     AND '2010-02-01'
+SELECT COUNT(*)
+FROM Invoice
+WHERE InvoiceDate BETWEEN '2010-01-01'
+    AND '2010-02-01'
 -- 7
 
 -- How many tracks have a null composer?
--- SELECT COUNT(*)
--- FROM TRACK
--- WHERE Composer IS NULL;
+SELECT COUNT(*)
+FROM TRACK
+WHERE Composer IS NULL;
 -- 978
 
 -- How Many distinct album title are there?
--- SELECT COUNT(DISTINCT Title)
--- FROM ALBUM;
+SELECT COUNT(DISTINCT Title)
+FROM ALBUM;
 -- 347
 
 -- How Many distinct album title are there?
--- SELECT COUNT(DISTINCT AlbumId)
--- FROM ALBUM;
+SELECT COUNT(DISTINCT AlbumId)
+FROM ALBUM;
 -- 348
 
 -- What are the 5 longest songs?
--- SELECT Name, AlbumId, Milliseconds/1000./60. AS Minutes
--- FROM TRACK
--- ORDER BY Milliseconds DESC
--- LIMIT 5;
+SELECT Name, AlbumId, Milliseconds/1000./60. AS Minutes
+FROM TRACK
+ORDER BY Milliseconds DESC
+LIMIT 5;
 
 -- Name|AlbumId|Minutes
 -- Occupation / Precipice|227|88.1158833333333
@@ -59,9 +59,9 @@
 -- Battlestar Galactica, Pt. 2|253|49.2680166666667
 
 -- Songs with R.E.M.
--- SELECT *
--- FROM ARTIST
--- WHERE Name LIKE '%R.E.M.%';
+SELECT *
+FROM ARTIST
+WHERE Name LIKE '%R.E.M.%';
 
 -- ArtistId|Name
 -- 122|R.E.M. Feat. Kate Pearson
@@ -69,100 +69,98 @@
 -- 124|R.E.M.
 
 -- How many 'Love' song are there?
--- SELECT COUNT(*)
--- FROM Track
--- WHERE (Name LIKE '%love%' AND Name NOT LIKE '%glove%')
---     OR Name LIKE '%loving%';
+SELECT COUNT(*)
+FROM Track
+WHERE (Name LIKE '%love%' AND Name NOT LIKE '%glove%')
+    OR Name LIKE '%loving%';
 -- 114
 
 -- Create a new table
--- CREATE TABLE IF NOT EXISTS ds_songs(
---     song_id INTEGER,
---     genre VARCHAR(64),
---     artist VARCHAR(64),
---     song_name VARCHAR(128),
---     track_length FLOAT(2)
--- );
+CREATE TABLE IF NOT EXISTS ds_songs(
+    song_id INTEGER,
+    genre VARCHAR(64),
+    artist VARCHAR(64),
+    song_name VARCHAR(128),
+    track_length FLOAT(2)
+);
 
 -- Insert values into the new table
--- INSERT INTO ds_songs
---     (song_id, genre, artist, song_name, track_length)
---     VALUES (01, 'R&B', 'Vrushank Vora', 'Radical Transparency', 2.6);
+INSERT INTO ds_songs
+    (song_id, genre, artist, song_name, track_length)
+    VALUES (01, 'R&B', 'Vrushank Vora', 'Radical Transparency', 2.6);
 
 -- Drop Table
--- DROP TABLE IF EXISTS ds_songs;
+DROP TABLE IF EXISTS ds_songs;
 
 -- How many tracks are rock or alternative?
--- SELECT COUNT(*)
--- FROM track
--- JOIN genre
--- on track.genreid = genre.genreid
--- WHERE genre.name IN ('Rock', 'Alternative',
---                         'Rock And Roll', 'Alternative &');
+SELECT COUNT(*)
+FROM track
+JOIN genre
+on track.genreid = genre.genreid
+WHERE genre.name IN ('Rock', 'Alternative',
+                        'Rock And Roll', 'Alternative &');
 -- 1337
 
 -- How many tracks are performed by R.E.M. excluding collaborators?
--- SELECT COUNT(*)
--- FROM track
--- JOIN album
--- ON track.albumid = album.albumid
--- JOIN artist
--- ON album.artistid = artist.artistid
--- WHERE artist.name = 'R.E.M.';
+SELECT COUNT(*)
+FROM track
+JOIN album
+ON track.albumid = album.albumid
+JOIN artist
+ON album.artistid = artist.artistid
+WHERE artist.name = 'R.E.M.';
 -- 41
 
 -- How many tracks are performed by R.E.M. with collaborators?
--- SELECT COUNT(*)
--- FROM track
--- JOIN album
--- ON track.albumid = album.albumid
--- JOIN artist
--- ON album.artistid = artist.artistid
--- WHERE artist.name LIKE '%R.E.M.%'
---     AND artist.name != 'R.E.M.';
+SELECT COUNT(*)
+FROM track
+JOIN album
+ON track.albumid = album.albumid
+JOIN artist
+ON album.artistid = artist.artistid
+WHERE artist.name LIKE '%R.E.M.%'
+    AND artist.name != 'R.E.M.';
 -- 11
 
--- What are other interesting queries can you create that join 2 tables?
-
 -- What is the most popular media type by total sales?
--- SELECT type, SUM(total)
--- FROM (
---     SELECT mediatype.name AS type, invoiceline.unitprice * invoiceline.quantity AS Total
---     FROM invoiceline
---     JOIN track
---     ON invoiceline.trackid = track.trackid
---     JOIN mediatype
---     ON track.mediatypeid = mediatype.mediatypeid
--- )
--- GROUP BY type;
+SELECT type, SUM(total)
+FROM (
+    SELECT mediatype.name AS type, invoiceline.unitprice * invoiceline.quantity AS Total
+    FROM invoiceline
+    JOIN track
+    ON invoiceline.trackid = track.trackid
+    JOIN mediatype
+    ON track.mediatypeid = mediatype.mediatypeid
+)
+GROUP BY type;
 
 -- What was the sales total for January 2010?
--- SELECT SUM(Total) AS sales_total
--- FROM invoice
--- WHERE invoicedate BETWEEN '2010-01-%';
+SELECT SUM(Total) AS sales_total
+FROM invoice
+WHERE invoicedate BETWEEN '2010-01-%';
 -- 52.62
 
 -- What is the average length of a song by R.E.M.?
--- SELECT AVG(t.Milliseconds)/1000./60. AS Minutes
--- FROM track AS t
--- JOIN album AS al
--- ON t.albumid = al.albumid
--- JOIN artist AS ar
--- ON al.artistid = ar.artistid
--- WHERE ar.name LIKE '%R.E.M.%';
+SELECT AVG(t.Milliseconds)/1000./60. AS Minutes
+FROM track AS t
+JOIN album AS al
+ON t.albumid = al.albumid
+JOIN artist AS ar
+ON al.artistid = ar.artistid
+WHERE ar.name LIKE '%R.E.M.%';
 
 -- 4.04347884615385
 
 -- Which Artists Have the Most Tracks?
--- SELECT ar.name, COUNT(*) AS tracks
--- FROM track AS t
--- JOIN album AS al
---     ON t.albumid = al.albumid
--- JOIN artist AS ar
---     ON al.artistid = ar.artistid
--- GROUP BY ar.name
--- ORDER BY tracks DESC
--- LIMIT 25;
+SELECT ar.name, COUNT(*) AS tracks
+FROM track AS t
+JOIN album AS al
+    ON t.albumid = al.albumid
+JOIN artist AS ar
+    ON al.artistid = ar.artistid
+GROUP BY ar.name
+ORDER BY tracks DESC
+LIMIT 25;
 
 -- Name         tracks
 -- -----------  ----------
@@ -270,8 +268,3 @@ LIMIT 25;
 -- St. Anger      75.1176166666667
 -- Supernatural   75.0091833333333
 -- Chronicle, Vo  74.9969666666667
-
-
-
-
-
